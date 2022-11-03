@@ -50,5 +50,9 @@ public long getDefaultPrice() {
     // TODO Auto-generated method stub
     return this.getPrice();
 }
+@Override
+public String toString() {
+    return "SmartPhones [defaultPrice=" + defaultPrice + ", name=" + name + "]";
+}
     
 }

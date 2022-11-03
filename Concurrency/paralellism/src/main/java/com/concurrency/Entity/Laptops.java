@@ -59,4 +59,9 @@ public class Laptops implements Products {
         return this.getPrice();
     }
 
+    @Override
+    public String toString() {
+        return "Laptops [dfeaultPrice=" + dfeaultPrice + ", name=" + name + "]";
+    }
+
 }
