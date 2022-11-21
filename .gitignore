@@ -9,6 +9,8 @@
 *.user
 *.userosscache
 *.sln.docstates
+*settings.json
+*.Ist
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -353,3 +355,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+*Concurrency/paralellism/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/
+Concurrency/paralellism/target/surefire-reports/TEST-com.concurrency.AppTest.xml
+Concurrency/paralellism/target/maven-archiver/pom.properties
+Concurrency/paralellism/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+Concurrency/paralellism/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+Concurrency/paralellism/target/surefire-reports/com.concurrency.AppTest.txt

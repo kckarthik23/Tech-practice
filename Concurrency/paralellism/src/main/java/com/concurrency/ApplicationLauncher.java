@@ -3,10 +3,13 @@ package com.concurrency;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -50,6 +53,8 @@ public class ApplicationLauncher {
         startTime = System.currentTimeMillis();
         parallelThreadExecutor();
         getExecutionTime(startTime);
+        CompletableFutureExecutor();
+
     }
 
     private static void parallelThreadExecutor() {
@@ -86,6 +91,53 @@ public class ApplicationLauncher {
             e.printStackTrace();
         }
         exec.shutdown();
+    }
+
+    public static void CompletableFutureExecutor() {
+       /*  CompletableFuture complteFuture = new CompletableFuture<>();
+        new Thread(() -> {
+            try {
+                new BestProductHelper().call();
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }).start();
+        while (!complteFuture.complete(complteFuture))
+            System.out.println("running still");
+        try {
+            System.out.println(complteFuture.get(10, TimeUnit.SECONDS));
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+ */
+long startTime=System.currentTimeMillis();
+Executor customExec=Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),(r)->{
+    Thread t=new Thread(r);
+    t.setDaemon(true);
+    t.setName("custom");
+    return t;
+});
+CompletableFuture<Void> cfv= CompletableFuture.supplyAsync(()->{
+    try {
+        return new BestProductHelper().call();
+    } catch (Exception e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
+    return null;
+}, customExec).thenAccept((product)->System.out.println(product));
+
+CompletableFuture<Products> cf=CompletableFuture
+.supplyAsync(()-> PricingService.getPrice(new Laptops(94000, "MACBOOK AIR"), Currency.GBP))
+.thenCompose(price->CompletableFuture.supplyAsync(()->ExchangeService.getExchangedProduct(new Laptops( Math.round(price) , "MACBOOK AIR"), Currency.USD,
+Catalogs.LAPTOPS)));
+cfv.join();
+System.out.println(" excahnged prod is " + cf.join());
+getExecutionTime(startTime);
+
+
     }
 
     private static void getExecutionTime(long startTime) {

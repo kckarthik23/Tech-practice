@@ -14,11 +14,11 @@ public class BestProductHelper implements Callable<Products> {
     @Override
     public Products call() throws Exception {
         // TODO Auto-generated method stub
-        Catalogs catalog= CatalogService.getCatalogs("SMARTPHONES");
-        Products product=ProductService.getBestProduct(catalog);
-        Currency currency= CurrencyService.getCurrency("USD");
- //System.out.println(product);
+        Catalogs catalog = CatalogService.getCatalogs("SMARTPHONES");
+        Products product = ProductService.getBestProduct(catalog);
+        Currency currency = CurrencyService.getCurrency("USD");
+        // System.out.println(product);
         return product;
     }
-    
+
 }
